@@ -9,5 +9,6 @@ public class ForoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ForoApplication.class, args);
 	}
+	String dbUrl = System.getenv("DB_URL_API");
 
 }
