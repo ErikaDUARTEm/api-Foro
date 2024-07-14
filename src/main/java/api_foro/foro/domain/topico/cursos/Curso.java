@@ -1,9 +1,9 @@
 package api_foro.foro.domain.topico.cursos;
 
+import api_foro.foro.domain.topico.usuarios.Usuario;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.security.PrivateKey;
 
 @Table(name="cursos")
 @Entity
@@ -16,6 +16,9 @@ public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
 }

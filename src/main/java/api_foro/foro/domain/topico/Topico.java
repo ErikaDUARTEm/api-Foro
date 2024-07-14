@@ -2,13 +2,15 @@ package api_foro.foro.domain.topico;
 
 import api_foro.foro.domain.topico.cursos.Curso;
 import api_foro.foro.domain.topico.usuarios.Usuario;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import api_foro.foro.domain.topico.usuarios.UsuarioDTO;
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Table(name="topicos")
 @Entity
@@ -18,38 +20,39 @@ import java.util.List;
 @Setter
 public class Topico {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
-   private String title;
-   private String message;
-   private String date;
-   @Enumerated(EnumType.STRING)
-   private Estatus estatus;
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Long id;
 
-   @JsonProperty("curso_id")
-   @ManyToOne
-   @JoinColumn(name = "curso_id")
-   private Curso curso;
+      private String titulo;
 
-   @ManyToOne
-   @JoinColumn(name = "usuario_id")
-   @JsonProperty("usuario_id")
-   private Usuario usuario;
+      private String mensaje;
 
-   @ElementCollection
-   private List<String> respuestas = new ArrayList<>();
+      @Column(name = "fecha_creacion")
+      private LocalDate fechaCreacion;
 
-   public Topico(Long id, String title, String message, String date, Estatus estatus, Curso curso, Usuario usuario, List<String> respuestas) {
-      this.id = id;
-      this.title = title;
-      this.message = message;
-      this.date = date;
-      this.estatus = estatus;
-      this.curso = curso;
-      this.usuario = usuario;
-      this.respuestas = respuestas;
-   }
+      @Enumerated(EnumType.STRING)
+      private Estatus estatus;
 
+      @ManyToOne
+      @JoinColumn(name = "usuario_id")
+      private Usuario usuario;
 
+      @ManyToOne
+      @JoinColumn(name = "curso_id")
+      private Curso curso;
+
+      public Topico(DatosRespuestaTopico datosRespuestaTopico) {
+            this.titulo = datosRespuestaTopico.title();
+            this.mensaje = datosRespuestaTopico.message();
+
+            LocalDateTime ahora = LocalDateTime.now();
+            DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String horaFormateada = ahora.format(formateador);
+            this.fechaCreacion = LocalDate.parse(horaFormateada, formateador);
+
+            this.estatus = Estatus.PENDIENTE;
+
+      }
 }
+

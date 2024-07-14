@@ -1,11 +1,18 @@
 package api_foro.foro.domain.topico;
 
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 
 public record DatosRespuestaTopico(
+
+        @NotBlank
         String title,
+        @NotBlank
         String message,
-        String usuarioId,
-        String cursoId
-) {
+        @NotNull
+        Long usuarioId,
+        @NotNull
+        Long cursoId) {
+
 }
