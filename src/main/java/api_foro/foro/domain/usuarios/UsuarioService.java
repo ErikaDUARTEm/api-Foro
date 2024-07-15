@@ -1,4 +1,4 @@
-package api_foro.foro.domain.topico.usuarios;
+package api_foro.foro.domain.usuarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +12,13 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public ResponseEntity<UsuarioDTO> registarUsuario(UsuarioDTO usuarioDTO,
+    public ResponseEntity<UsuarioRegistroDTO> registarUsuario(UsuarioRegistroDTO usuarioRegistroDTO,
                                                       UriComponentsBuilder uriComponentsBuilder) {
-        var usuario = new Usuario(usuarioDTO);
+        var usuario = new Usuario(usuarioRegistroDTO);
 
         Usuario usuarioConId = usuarioRepository.save(usuario);
 
-        UsuarioDTO datosRespuestaUsuario = new UsuarioDTO(usuarioConId.getNombre(), usuarioConId.getEmail(), usuarioConId.getClave());
+        UsuarioRegistroDTO datosRespuestaUsuario = new UsuarioRegistroDTO(usuarioConId.getNombre(), usuarioConId.getEmail(), usuarioConId.getClave());
         URI url = uriComponentsBuilder.path("/usuarios/{id}").buildAndExpand(usuarioConId.getId()).toUri();
 
         return ResponseEntity.created(url).body(datosRespuestaUsuario);

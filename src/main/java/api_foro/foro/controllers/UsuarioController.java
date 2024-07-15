@@ -1,12 +1,8 @@
 package api_foro.foro.controllers;
 
-import api_foro.foro.domain.topico.cursos.Curso;
-import api_foro.foro.domain.topico.cursos.CursoRepository;
-import api_foro.foro.domain.topico.usuarios.Usuario;
-import api_foro.foro.domain.topico.usuarios.UsuarioDTO;
-import api_foro.foro.domain.topico.usuarios.UsuarioRepository;
-import api_foro.foro.domain.topico.usuarios.UsuarioService;
-import jakarta.persistence.EntityNotFoundException;
+import api_foro.foro.domain.usuarios.UsuarioDTO;
+import api_foro.foro.domain.usuarios.UsuarioRegistroDTO;
+import api_foro.foro.domain.usuarios.UsuarioService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +22,7 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<UsuarioDTO> registrarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<UsuarioRegistroDTO> registrarUsuario(@Valid @RequestBody UsuarioRegistroDTO usuarioDTO, UriComponentsBuilder uriComponentsBuilder){
         return service.registarUsuario(usuarioDTO, uriComponentsBuilder);
     }
 

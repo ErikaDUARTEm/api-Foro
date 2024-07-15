@@ -1,13 +1,10 @@
 package api_foro.foro.controllers;
 
-import api_foro.foro.domain.topico.cursos.Category;
-import api_foro.foro.domain.topico.cursos.Curso;
-import api_foro.foro.domain.topico.cursos.CursoDTO;
-import api_foro.foro.domain.topico.cursos.CursoRepository;
-import api_foro.foro.domain.topico.usuarios.Usuario;
-import api_foro.foro.domain.topico.usuarios.UsuarioRepository;
+import api_foro.foro.domain.cursos.Curso;
+import api_foro.foro.domain.cursos.CursoDTO;
+import api_foro.foro.domain.cursos.CursoRepository;
+import api_foro.foro.domain.usuarios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

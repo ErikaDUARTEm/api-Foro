@@ -1,4 +1,4 @@
-package api_foro.foro.domain.topico.usuarios;
+package api_foro.foro.domain.usuarios;
 import api_foro.foro.domain.topico.Topico;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -25,7 +25,7 @@ public class Usuario  {
     @JsonManagedReference
     List<Topico> topicos;
 
-    public Usuario(UsuarioDTO usuario) {
+    public Usuario(UsuarioRegistroDTO usuario) {
         this.nombre = usuario.nombre();
         this.email = usuario.email();
         this.clave = usuario.clave();

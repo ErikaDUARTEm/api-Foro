@@ -1,4 +1,4 @@
-package api_foro.foro.domain.topico.cursos;
+package api_foro.foro.domain.cursos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,5 +14,4 @@ public record CursoDTO (
         @NotBlank
         Category category
 ){
-
 }

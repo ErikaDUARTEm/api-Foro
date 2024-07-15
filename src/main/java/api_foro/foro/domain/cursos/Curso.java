@@ -1,7 +1,5 @@
-package api_foro.foro.domain.topico.cursos;
+package api_foro.foro.domain.cursos;
 
-import api_foro.foro.domain.topico.usuarios.Usuario;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
