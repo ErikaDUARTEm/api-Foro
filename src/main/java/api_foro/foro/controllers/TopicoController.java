@@ -32,4 +32,8 @@ public class TopicoController {
     public List<ListadoTopicosDTO> listarTopicos() {
         return service.listarTopicos();
     }
+     @GetMapping("/{id}")
+    public ResponseEntity<ListadoTopicosDTO> topicoPorId(@PathVariable Long id){
+        return service.topicoPorId(id);
+     }
 }

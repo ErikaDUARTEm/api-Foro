@@ -4,12 +4,11 @@ import api_foro.foro.domain.cursos.Curso;
 import api_foro.foro.domain.cursos.CursoRepository;
 import api_foro.foro.domain.usuarios.Usuario;
 import api_foro.foro.domain.usuarios.UsuarioRepository;
+import api_foro.foro.infra.errores.ValidacionDeIntegridad;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -64,4 +63,17 @@ public class TopicoService {
                 .map(ListadoTopicosDTO::from)
                 .collect(Collectors.toList());
     }
+
+    public ResponseEntity<ListadoTopicosDTO> topicoPorId(Long id) {
+        if (topicoRepository.findById(id).isEmpty()){
+            throw new ValidacionDeIntegridad("El tópico no fue encontrado. Verifique el id.");
+        }
+
+        Topico topico = topicoRepository.getReferenceById(id);
+
+        var datosTopico = ListadoTopicosDTO.from(topico);
+
+        return ResponseEntity.ok(datosTopico);
+    }
+
 }

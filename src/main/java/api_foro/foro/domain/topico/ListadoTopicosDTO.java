@@ -26,6 +26,7 @@ public record ListadoTopicosDTO(
 
         CursoDTO cursoId) {
 
+
     public static ListadoTopicosDTO from(Topico topico) {
         return new ListadoTopicosDTO(
                 topico.getTitulo(),

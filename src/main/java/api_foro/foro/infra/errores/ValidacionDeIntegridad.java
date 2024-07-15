@@ -1,0 +1,8 @@
+package api_foro.foro.infra.errores;
+
+public class ValidacionDeIntegridad  extends RuntimeException{
+    public ValidacionDeIntegridad(String s){
+        super(s);
+    }
+
+}
