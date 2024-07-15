@@ -3,6 +3,7 @@ package api_foro.foro.domain.topico;
 import api_foro.foro.domain.topico.cursos.Curso;
 import api_foro.foro.domain.topico.usuarios.Usuario;
 import api_foro.foro.domain.topico.usuarios.UsuarioDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,6 +37,7 @@ public class Topico {
 
       @ManyToOne
       @JoinColumn(name = "usuario_id")
+      @JsonBackReference
       private Usuario usuario;
 
       @ManyToOne

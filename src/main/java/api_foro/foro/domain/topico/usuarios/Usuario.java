@@ -1,5 +1,6 @@
 package api_foro.foro.domain.topico.usuarios;
 import api_foro.foro.domain.topico.Topico;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Usuario  {
     private String clave;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     List<Topico> topicos;
 
     public Usuario(UsuarioDTO usuario) {
