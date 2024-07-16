@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,8 +33,16 @@ public class TopicoController {
     public List<ListadoTopicosDTO> listarTopicos() {
         return service.listarTopicos();
     }
-     @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ListadoTopicosDTO> topicoPorId(@PathVariable Long id){
         return service.topicoPorId(id);
      }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DatosActualizarTopico> actualizarTopico(
+            @Valid @RequestBody DatosActualizarTopico datosActualizarTopico,
+            @PathVariable Long id,
+            UriComponentsBuilder uriComponentsBuilder) {
+        return service.actualizarTopico(datosActualizarTopico, id, uriComponentsBuilder);
+    }
 }

@@ -6,10 +6,13 @@ import api_foro.foro.domain.usuarios.Usuario;
 import api_foro.foro.domain.usuarios.UsuarioRepository;
 import api_foro.foro.infra.errores.ValidacionDeIntegridad;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -76,4 +79,32 @@ public class TopicoService {
         return ResponseEntity.ok(datosTopico);
     }
 
+    public ResponseEntity<DatosActualizarTopico> actualizarTopico(@Valid DatosActualizarTopico datosActualizarTopico, Long id, UriComponentsBuilder uriComponentsBuilder) {
+        Topico topico = topicoRepository.findById(id)
+                .orElseThrow(() -> new ValidacionDeIntegridad("El tópico no fue encontrado. Verifique el id."));
+
+        Usuario usuario = usuarioRepository.findById(datosActualizarTopico.usuarioId())
+                .orElseThrow(() -> new ValidacionDeIntegridad("El usuario no fue encontrado."));
+
+        Curso curso = cursoRepository.findById(datosActualizarTopico.cursoId())
+                .orElseThrow(() -> new ValidacionDeIntegridad("El curso no fue encontrado."));
+
+        topico.setTitulo(datosActualizarTopico.title());
+        topico.setMensaje(datosActualizarTopico.message());
+        topico.setUsuario(usuario);
+        topico.setCurso(curso);
+
+        topicoRepository.save(topico);
+
+        DatosActualizarTopico datosRespuestaTopico = new DatosActualizarTopico(
+                topico.getTitulo(),
+                topico.getMensaje(),
+                topico.getUsuario().getId(),
+                topico.getCurso().getId()
+        );
+
+        URI url = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+
+        return ResponseEntity.created(url).body(datosRespuestaTopico);
+    }
 }

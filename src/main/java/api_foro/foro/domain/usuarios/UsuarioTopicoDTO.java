@@ -5,18 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
+public record UsuarioTopicoDTO(
 
-public record UsuarioDTO(
-        @NotNull
-        Long id,
         @NotNull()
-        String nombre,
-        @Email
-        @NotBlank()
-        String email
-
-
-
+        String nombre
 ) {
 
 }

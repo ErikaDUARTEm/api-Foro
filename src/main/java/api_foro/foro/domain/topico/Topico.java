@@ -54,5 +54,20 @@ public class Topico {
             this.estatus = Estatus.PENDIENTE;
 
       }
+
+      public void actualizarDatos(DatosActualizarTopico datosActualizarTopico, Curso curso, Usuario usuario) {
+            if (datosActualizarTopico.title() != null) {
+                  this.titulo = datosActualizarTopico.title();
+            }
+            if (datosActualizarTopico.message() != null){
+                  this.mensaje = datosActualizarTopico.message();
+            }
+            if (curso != null){
+                  this.curso = curso;
+            }
+            if (usuario != null){
+                  this.usuario = usuario;
+            }
+      }
 }
 

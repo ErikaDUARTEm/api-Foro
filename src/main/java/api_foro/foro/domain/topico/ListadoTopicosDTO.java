@@ -1,13 +1,8 @@
 package api_foro.foro.domain.topico;
 
-import api_foro.foro.domain.cursos.CursoDTO;
-import api_foro.foro.domain.usuarios.UsuarioDTO;
+import api_foro.foro.domain.cursos.CursoTopicoDTO;
+import api_foro.foro.domain.usuarios.UsuarioTopicoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -22,9 +17,9 @@ public record ListadoTopicosDTO(
 
         Estatus estatus,
 
-        UsuarioDTO usuarioId,
+        UsuarioTopicoDTO usuarioId,
 
-        CursoDTO cursoId) {
+        CursoTopicoDTO cursoId) {
 
 
     public static ListadoTopicosDTO from(Topico topico) {
@@ -33,8 +28,8 @@ public record ListadoTopicosDTO(
                 topico.getMensaje(),
                 topico.getFechaCreacion(),
                 topico.getEstatus(),
-                new UsuarioDTO( topico.getUsuario().getNombre(), topico.getUsuario().getEmail()),
-                new CursoDTO(topico.getCurso().getId(), topico.getCurso().getName(), topico.getCurso().getCategory())
+                new UsuarioTopicoDTO(topico.getUsuario().getNombre()),
+                new CursoTopicoDTO(topico.getCurso().getName())
         );
     }
 }
