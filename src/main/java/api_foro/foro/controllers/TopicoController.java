@@ -34,7 +34,7 @@ public class TopicoController {
         return service.listarTopicos();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ListadoTopicosDTO> topicoPorId(@PathVariable Long id){
+    public ResponseEntity<ListadoTopicosDTO> topicoPorId(@Valid @PathVariable Long id){
         return service.topicoPorId(id);
      }
 

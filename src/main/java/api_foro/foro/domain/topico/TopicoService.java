@@ -79,15 +79,24 @@ public class TopicoService {
         return ResponseEntity.ok(datosTopico);
     }
 
-    public ResponseEntity<DatosActualizarTopico> actualizarTopico(@Valid DatosActualizarTopico datosActualizarTopico, Long id, UriComponentsBuilder uriComponentsBuilder) {
-        Topico topico = topicoRepository.findById(id)
-                .orElseThrow(() -> new ValidacionDeIntegridad("El tópico no fue encontrado. Verifique el id."));
+    public ResponseEntity<DatosActualizarTopico> actualizarTopico( DatosActualizarTopico datosActualizarTopico, Long id, UriComponentsBuilder uriComponentsBuilder) {
+        Optional<Topico> optionalTopico = topicoRepository.findById(id);
+        if (!optionalTopico.isPresent()) {
+            throw new ValidacionDeIntegridad("El tópico no fue encontrado. Verifique el id.");
+        }
+        Topico topico = optionalTopico.get();
 
-        Usuario usuario = usuarioRepository.findById(datosActualizarTopico.usuarioId())
-                .orElseThrow(() -> new ValidacionDeIntegridad("El usuario no fue encontrado."));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(datosActualizarTopico.usuarioId());
+        if (!optionalUsuario.isPresent()) {
+            throw new ValidacionDeIntegridad("El usuario no fue encontrado.");
+        }
+        Usuario usuario = optionalUsuario.get();
 
-        Curso curso = cursoRepository.findById(datosActualizarTopico.cursoId())
-                .orElseThrow(() -> new ValidacionDeIntegridad("El curso no fue encontrado."));
+        Optional<Curso> optionalCurso = cursoRepository.findById(datosActualizarTopico.cursoId());
+        if (!optionalCurso.isPresent()) {
+            throw new ValidacionDeIntegridad("El curso no fue encontrado.");
+        }
+        Curso curso = optionalCurso.get();
 
         topico.setTitulo(datosActualizarTopico.title());
         topico.setMensaje(datosActualizarTopico.message());
