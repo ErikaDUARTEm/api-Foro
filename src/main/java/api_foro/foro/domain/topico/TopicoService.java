@@ -7,6 +7,8 @@ import api_foro.foro.domain.usuarios.UsuarioRepository;
 import api_foro.foro.infra.errores.ValidacionDeIntegridad;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class TopicoService {
+    private static final Logger logger = LoggerFactory.getLogger(TopicoService.class);
+
     @Autowired
     private TopicoRepository topicoRepository;
 
@@ -28,7 +32,7 @@ public class TopicoService {
 
     @Autowired
     private CursoRepository cursoRepository;
-
+    @Transactional
     public ResponseEntity<Topico> enviarTopico( DatosRegistroTopico datosRegistroTopico) {
         // Verificar que los IDs no sean nulos
         if (datosRegistroTopico.usuarioId() == null || datosRegistroTopico.cursoId() == null) {
@@ -66,7 +70,7 @@ public class TopicoService {
                 .map(ListadoTopicosDTO::from)
                 .collect(Collectors.toList());
     }
-
+    @Transactional
     public ResponseEntity<ListadoTopicosDTO> topicoPorId(Long id) {
         if (topicoRepository.findById(id).isEmpty()){
             throw new ValidacionDeIntegridad("El tópico no fue encontrado. Verifique el id.");
@@ -78,7 +82,7 @@ public class TopicoService {
 
         return ResponseEntity.ok(datosTopico);
     }
-
+    @Transactional
     public ResponseEntity<DatosActualizarTopico> actualizarTopico( DatosActualizarTopico datosActualizarTopico, Long id, UriComponentsBuilder uriComponentsBuilder) {
         Optional<Topico> optionalTopico = topicoRepository.findById(id);
         if (!optionalTopico.isPresent()) {
@@ -116,21 +120,19 @@ public class TopicoService {
 
         return ResponseEntity.created(url).body(datosRespuestaTopico);
     }
+    @Transactional
+    public ResponseEntity<String> deleteTopico(Long id) {
+        Optional<Topico> topicoOpt = topicoRepository.findById(id);
+        if (!topicoOpt.isPresent()) {
+            throw new ValidacionDeIntegridad("El tópico no fue encontrado. Verifique el id.");
+        }
 
-    public ResponseEntity<DatosActualizarTopico> eliminarTopico(Long id) {
-        Topico topico = topicoRepository.findById(id)
-                .orElseThrow(() -> new ValidacionDeIntegridad("El tópico no fue encontrado. Verifique el id."));
+        topicoRepository.deleteById(topicoOpt.get().getId());
 
-        topicoRepository.delete(topico);
+        logger.info("Tópico con ID {} eliminado exitosamente", topicoOpt.get().getId());
 
-        DatosActualizarTopico datosRespuestaTopico = new DatosActualizarTopico(
-                topico.getTitulo(),
-                topico.getMensaje(),
-                topico.getUsuario().getId(),
-                topico.getCurso().getId()
-        );
-
-        return ResponseEntity.ok(datosRespuestaTopico);
+        String mensaje = "Tópico eliminado exitosamente";
+        return ResponseEntity.ok(mensaje);
     }
 
 }

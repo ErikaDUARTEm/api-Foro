@@ -14,5 +14,5 @@ public interface TopicoRepository extends JpaRepository<Topico, Long> {
 
     @Modifying
     @Query("DELETE FROM Topico t WHERE t.id=:id")
-    DatosActualizarTopico deleteTopico(Long id);
+    public void deleteById(Long id);
 }

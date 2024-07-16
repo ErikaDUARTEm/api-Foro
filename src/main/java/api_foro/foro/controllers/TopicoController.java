@@ -33,16 +33,15 @@ public class TopicoController {
      }
 
     @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<DatosActualizarTopico> actualizarTopico(
             @Valid @RequestBody DatosActualizarTopico datosActualizarTopico,
             @PathVariable Long id,
             UriComponentsBuilder uriComponentsBuilder) {
         return service.actualizarTopico(datosActualizarTopico, id, uriComponentsBuilder);
     }
+
     @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity<DatosActualizarTopico> eliminarTopico(@PathVariable Long id) {
-        return service.eliminarTopico(id);
+    public ResponseEntity<String> deleteTopico(@PathVariable Long id) {
+        return service.deleteTopico(id);
     }
 }
