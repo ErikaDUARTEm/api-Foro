@@ -116,4 +116,21 @@ public class TopicoService {
 
         return ResponseEntity.created(url).body(datosRespuestaTopico);
     }
+
+    public ResponseEntity<DatosActualizarTopico> eliminarTopico(Long id) {
+        Topico topico = topicoRepository.findById(id)
+                .orElseThrow(() -> new ValidacionDeIntegridad("El tópico no fue encontrado. Verifique el id."));
+
+        topicoRepository.delete(topico);
+
+        DatosActualizarTopico datosRespuestaTopico = new DatosActualizarTopico(
+                topico.getTitulo(),
+                topico.getMensaje(),
+                topico.getUsuario().getId(),
+                topico.getCurso().getId()
+        );
+
+        return ResponseEntity.ok(datosRespuestaTopico);
+    }
+
 }
