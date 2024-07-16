@@ -22,3 +22,8 @@
 /topicos: para registrar topicos.
 
 ## imagenes
+
+![enpoint usuario](https://raw.githubusercontent.com/ErikaDUARTEm/api-Foro/main/src/main/java/api_foro/foro/imagenes/readme-usuario.png)
+
+![empoint topicos](https://raw.githubusercontent.com/ErikaDUARTEm/api-Foro/main/src/main/java/api_foro/foro/imagenes/alura-topicos.png)
+
