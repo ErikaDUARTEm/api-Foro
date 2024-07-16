@@ -16,10 +16,10 @@
 
 ## Enpoints 
 
-*/usuarios : para agregar usuarios a la base de datos
-*/login : para logearse con email y clave.
-*/cursos: para guardar cursos con nombre, y categoria
-*/topicos: para registrar topicos.
+* /usuarios : para agregar usuarios a la base de datos
+* /login : para logearse con email y clave.
+* /cursos: para guardar cursos con nombre, y categoria
+* /topicos: para registrar topicos.
 
 ## imagenes
 
